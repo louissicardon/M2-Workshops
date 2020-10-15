@@ -56,7 +56,12 @@ app.post('/remove-workshop', function (req, res) {
 })
 
 app.post('/update-workshop', function(req, res) {
-    res.status(500).send("TODO")
+    const workshopName = req.params.name
+    InMemoryWorkshop.getWorkshopByName(workshopName)
+    .then(workshop => {
+        res.render('ejs.workshop', workshop)
+    })
+    .catch(e => ejs.send(e.message))
 })
 
 app.listen(3000, function () {
